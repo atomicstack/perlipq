@@ -1,4 +1,4 @@
-$Id: README,v 1.8 2001/01/08 10:04:07 jmorris Exp $
+$Id: README,v 1.9 2001/10/22 13:47:15 jmorris Exp $
 
 INTRODUCTION
   Perlipq is a Perl extension to Linux iptables userspace queueing via libipq.
@@ -7,15 +7,16 @@ INTRODUCTION
   and passed to userspace.  Perlipq allows these packets to be manipulated in
   Perl and passed back to the stack.
   
-  This is version 1.20.
-	
+  This is version 1.24, released against iptables 1.2.4 with support for
+  the new timeout feature in ipq_read().
+  
 REQUIREMENTS
 
-  * Linux Kernel 2.4.0+
-  * iptables 1.2
+  * Linux Kernel 2.4
+  * iptables 1.2.4+
 
 INSTALLATION
-  First, ensure you have a 2.4.0 kernel installed and running with Netfilter,
+  First, ensure you have a 2.4 kernel installed and running with Netfilter,
   Userspace queuing (experimental) and IP tables support.
   
   Build and install iptables as per the iptables documentation, then use

@@ -1,5 +1,5 @@
 #
-# $Id: dumper.pl,v 1.4 2001/01/08 10:04:07 jmorris Exp $
+# $Id: dumper.pl,v 1.5 2001/10/22 13:47:16 jmorris Exp $
 #
 # Example IPQueue application, dumps packet metadata and IP
 # headers. Requires Tim Potter's NetPacket module.
@@ -13,6 +13,8 @@ $^W = 1;
 
 use IPTables::IPv4::IPQueue qw(:constants);
 use NetPacket::IP;
+
+use constant TIMEOUT => 1_000_000 * 2;		# 2 seconds
 
 sub dump_payload
 {
@@ -72,8 +74,11 @@ sub main
 		or die IPTables::IPv4::IPQueue->errstr;
 
 	while (1) {
-		my $msg = $queue->get_message()
-			or die IPTables::IPv4::IPQueue->errstr;
+		my $msg = $queue->get_message(TIMEOUT);
+		if (!defined $msg) {
+			next if IPTables::IPv4::IPQueue->errstr eq 'Timeout';
+			die IPTables::IPv4::IPQueue->errstr;
+		}
 	
 		dump_meta($msg);
 		dump_payload($msg->payload()) if $msg->data_len();

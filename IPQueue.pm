@@ -1,5 +1,5 @@
 #
-# $Id: IPQueue.pm,v 1.20 2001/01/08 10:04:07 jmorris Exp $
+# $Id: IPQueue.pm,v 1.21 2001/10/22 13:47:15 jmorris Exp $
 #
 # Perlipq - Perl extension for iptables userspace queuing.
 # This code is GPL.
@@ -18,7 +18,7 @@ require AutoLoader;
 @ISA = qw(Exporter DynaLoader);
 @EXPORT_OK = qw(IPQ_COPY_META IPQ_COPY_PACKET NF_DROP NF_ACCEPT);
 %EXPORT_TAGS = (constants => \@EXPORT_OK);
-$VERSION = '1.20';
+$VERSION = '1.24';
 
 sub AUTOLOAD
 {
@@ -75,8 +75,9 @@ sub set_mode
 
 sub get_message
 {
-	my ($self) = @_;
-	return _ipqxs_get_message($self->{_ctx}, 0);
+	my ($self, $timeout) = @_;
+	$timeout = 0 unless defined $timeout;
+	return _ipqxs_get_message($self->{_ctx}, $timeout);
 }
 
 sub set_verdict
@@ -236,12 +237,17 @@ default to zero.  Typically, a range of 1500 will suffice.
 
 This method is called by the constructor.
 
-=item get_message()
+=item get_message([timeout])
 
-Waits for a packet message from the kernel, returning a tainted
+Receives a packet message from the kernel, returning a tainted
 IPTables::IPv4::IPQueue::Packet object.
 
-This is a helper object with the following read only attributes:
+The optional timeout parameter may be used to specify a timeout for the
+operation in microseconds.  This is implemented internally via the select()
+syscall.  A value of zero or no value means to wait indefinitely.
+
+The returned object is a helper object with the following read only
+attributes:
 
 	packet_id         ID of queued packet.
 	mark              Netfilter mark value.
@@ -259,6 +265,10 @@ This is a helper object with the following read only attributes:
 
 Payload data, if present, is a scalar byte string suitable for use
 with packages such as I<NetPacket>.
+
+If the operation timed out, undef will be returned and the errstr()
+message will be 'Timeout'.  See the sample dumper.pl script for
+a simple example of how this may be handled.
 
 =item set_verdict(id, verdict [, data_len, buf ])
 
@@ -305,15 +315,9 @@ error condition and global errno value.
 	$queue->set_verdict($msg->packet_id(), NF_ACCEPT) > 0
 		or die IPTables::IPv4::IPQueue->errstr;
 
-=head1 TODO
+=head1 CHANGES
 
-=over 4
-
-=item * Verify working on 64-bit systems with a 32-bit userspace.
-
-=item * Fix lame error message if issuing a verdict on an invalid packet id.
-
-=back
+=item * Support for timeouts in get_message() was added in version 1.24.
 
 =head1 BUGS
 

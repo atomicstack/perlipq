@@ -1,5 +1,5 @@
 /*
- * $Id: IPQueue.xs,v 1.18 2000/12/03 01:41:54 jmorris Exp $
+ * $Id: IPQueue.xs,v 1.19 2001/10/22 13:47:15 jmorris Exp $
  *
  * Copyright (c) 2000 James Morris <jmorris@intercode.com.au>
  * This code is GPL.
@@ -167,7 +167,7 @@ _ipqxs_get_message (ctx, timeout)
 		char *CLASS = "IPTables::IPv4::IPQueue::Packet";
 	CODE:
 		status = ipq_read(ctx->handle, ctx->buf, ctx->buflen, timeout);
-		if (status < 0)
+		if (status <= 0)
 			XSRETURN_UNDEF;
 			
 		switch (ipq_message_type(ctx->buf)) {

@@ -1,5 +1,5 @@
 #
-# $Id: simple.t,v 1.3 2000/12/03 00:21:41 jmorris Exp $
+# $Id: simple.t,v 1.4 2001/10/22 13:47:16 jmorris Exp $
 #
 # Simple test.
 #
@@ -7,7 +7,7 @@ package simple_t;
 use strict;
 $^W = 1;
 
-my $tests = 3;
+my $tests = 4;
 
 sub test
 {
@@ -62,6 +62,23 @@ sub test
 			print "ok 3\n";
 		}
 	}
+	
+	#
+	# Test 4 - test get_message() with 20 millisecond
+	# timeout, assumes no packet will arrive, may not return
+	# on failure.
+	#
+	my $packet = $q->get_message(1000 * 2);
+	if (defined $packet) {
+		print "not ok 4\n";
+	} else {
+		if (IPTables::IPv4::IPQueue->errstr eq 'Timeout') {
+			print "ok 4\n";
+		} else {
+			print "not ok 4\n";
+		}
+	}
+	
 }
 
 test();
