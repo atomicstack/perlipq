@@ -1,0 +1,7 @@
+#
+# $Id: Changes,v 1.3 2000/12/03 00:21:40 jmorris Exp $
+#
+Revision history for Perl extension IPTables::IPv4::IPQueue.
+
+* Sun 03 Dec 2000 James Morris <jmorris@intercode.com.au>
+- Version 0.900 alpha release.
