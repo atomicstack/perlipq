@@ -1,4 +1,4 @@
-$Id: README,v 1.9 2001/10/22 13:47:15 jmorris Exp $
+$Id: README,v 1.12 2002/01/14 09:15:49 jmorris Exp $
 
 INTRODUCTION
   Perlipq is a Perl extension to Linux iptables userspace queueing via libipq.
@@ -7,17 +7,17 @@ INTRODUCTION
   and passed to userspace.  Perlipq allows these packets to be manipulated in
   Perl and passed back to the stack.
   
-  This is version 1.24, released against iptables 1.2.4 with support for
-  the new timeout feature in ipq_read().
+  This is version 1.25, released against iptables 1.2.5 with support for
+  IPv6.
   
 REQUIREMENTS
 
-  * Linux Kernel 2.4
-  * iptables 1.2.4+
+  * Linux Kernel 2.4/2.5
+  * iptables 1.2.5+
 
 INSTALLATION
-  First, ensure you have a 2.4 kernel installed and running with Netfilter,
-  Userspace queuing (experimental) and IP tables support.
+  First, ensure you have a 2.4/2.5 kernel installed and running with
+  Netfilter, Userspace queuing (experimental) and IP tables support.
   
   Build and install iptables as per the iptables documentation, then use
   'make install-devel' to install libipq development components under
@@ -63,14 +63,9 @@ INSTALLATION
 
 EXAMPLES
   passer.pl  -  Passes all packets back to kernel with NF_ACCEPT verdict.
+  passer6.pl -  Same as above, but for the IPv6 queue handler.
   dumper.pl  -  Dumps packet metadata and IP headers.
 
-TODO
-  A general packet mangling package is needed as a companion to this, perhaps
-  NetPacket with encode() methods implemented.
-  
-  More tests.
-	
 COPYRIGHT
-  Copyright (c) 2000-2001 James Morris <jmorris@intercode.com.au>
+  Copyright (c) 2000-2002 James Morris <jmorris@intercode.com.au>
   This package is released under the GPL.

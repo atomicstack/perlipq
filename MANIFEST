@@ -7,5 +7,6 @@ typemap
 README
 COPYING
 passer.pl
+passer6.pl
 dumper.pl
 t/simple.t

@@ -1,10 +1,10 @@
 #
-# $Id: dumper.pl,v 1.5 2001/10/22 13:47:16 jmorris Exp $
+# $Id: dumper.pl,v 1.6 2002/01/14 09:15:49 jmorris Exp $
 #
 # Example IPQueue application, dumps packet metadata and IP
 # headers. Requires Tim Potter's NetPacket module.
 #
-# Copyright (c) 2000-2001 James Morris <jmorris@intercode.com.au>
+# Copyright (c) 2000-2002 James Morris <jmorris@intercode.com.au>
 # This code is GPL.
 #
 package ipq_example;

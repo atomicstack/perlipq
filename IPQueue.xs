@@ -1,5 +1,5 @@
 /*
- * $Id: IPQueue.xs,v 1.19 2001/10/22 13:47:15 jmorris Exp $
+ * $Id: IPQueue.xs,v 1.20 2001/11/24 09:29:58 jmorris Exp $
  *
  * Copyright (c) 2000 James Morris <jmorris@intercode.com.au>
  * This code is GPL.
@@ -117,8 +117,9 @@ constant(name,arg)
 	int arg
 
 ipqxs_ctx_t *
-_ipqxs_init_ctx(flags)
+_ipqxs_init_ctx(flags, protocol)
 	unsigned int flags
+	unsigned int protocol
 	CODE:
 		RETVAL = (ipqxs_ctx_t *)safemalloc(sizeof(ipqxs_ctx_t));
 		if (RETVAL == NULL) {
@@ -128,7 +129,7 @@ _ipqxs_init_ctx(flags)
 		
 		Zero(RETVAL, 1, ipqxs_ctx_t);
 		
-		RETVAL->handle = ipq_create_handle(flags);
+		RETVAL->handle = ipq_create_handle(flags, protocol);
 		if (RETVAL->handle == NULL) {
 			Safefree(RETVAL);
 			XSRETURN_UNDEF;

@@ -1,5 +1,5 @@
 #
-# $Id: IPQueue.pm,v 1.21 2001/10/22 13:47:15 jmorris Exp $
+# $Id: IPQueue.pm,v 1.23 2002/01/14 09:15:49 jmorris Exp $
 #
 # Perlipq - Perl extension for iptables userspace queuing.
 # This code is GPL.
@@ -15,10 +15,13 @@ require Exporter;
 require DynaLoader;
 require AutoLoader;
 
+# sys/socket.ph is broken on my system.
+use Socket 'PF_INET';
+
 @ISA = qw(Exporter DynaLoader);
 @EXPORT_OK = qw(IPQ_COPY_META IPQ_COPY_PACKET NF_DROP NF_ACCEPT);
 %EXPORT_TAGS = (constants => \@EXPORT_OK);
-$VERSION = '1.24';
+$VERSION = '1.25';
 
 sub AUTOLOAD
 {
@@ -127,7 +130,10 @@ sub _init
 {
 	my ($self, $args) = @_;
 	
-	$self->{_ctx} = _ipqxs_init_ctx(0)
+	my $protocol = defined $args->{protocol}
+		? $args->{protocol} : PF_INET;
+		
+	$self->{_ctx} = _ipqxs_init_ctx(0, $protocol)
 		or return;
 	
 	my $copy_mode = defined $args->{copy_mode}
@@ -216,8 +222,13 @@ Constructor.
 Creates userspace queuing object and sets the queuing mode.
 
 Parameters:
+  protocol
   copy_mode
   copy_range
+
+The protocol parameter, if provided, must be one of PF_INET or PF_INET6,
+for IPv4 and IPv6 packet queuing respectively.  If no protocol parameter
+is provided, the default is PF_INET.
 
 The default copy mode is IPQ_COPY_META.
 
@@ -325,7 +336,7 @@ None known.
 
 =head1 COPYRIGHT
 
-Copyright (c) 2000-2001 James Morris <jmorris@intercode.com.au>
+Copyright (c) 2000-2002 James Morris <jmorris@intercode.com.au>
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -353,6 +364,6 @@ L<libipq(3)>
 
 L<NetPacket(3)>
 
-The example scripts, passer.pl and dumper.pl.
+The example scripts, passer.pl, passer6.pl and dumper.pl.
 
 =cut
