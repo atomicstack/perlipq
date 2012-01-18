@@ -1,14 +1,9 @@
-$Id: README,v 1.12 2002/01/14 09:15:49 jmorris Exp $
-
 INTRODUCTION
   Perlipq is a Perl extension to Linux iptables userspace queueing via libipq.
   
   Packets may be selected from the stack via the iptables QUEUE target
   and passed to userspace.  Perlipq allows these packets to be manipulated in
   Perl and passed back to the stack.
-  
-  This is version 1.25, released against iptables 1.2.5 with support for
-  IPv6.
   
 REQUIREMENTS
 
@@ -19,9 +14,10 @@ INSTALLATION
   First, ensure you have a 2.4/2.5 kernel installed and running with
   Netfilter, Userspace queuing (experimental) and IP tables support.
   
-  Build and install iptables as per the iptables documentation, then use
-  'make install-devel' to install libipq development components under
-  /usr/local.
+  Install iptables and iptables-dev (or iptables-devel) via your package
+  manager, or if you prefer to build it yourself, install iptables as per the
+  iptables documentation, then use 'make install-devel' to install libipq
+  development components under /usr/local.
   
   Please read the libipq(3) man page for an overview of userspace
   packet queueing.
@@ -52,7 +48,7 @@ INSTALLATION
   any locally generated ICMP packets (e.g. ping) to the ip_queue module for
   userpace queuing.
 	
-  To run the tests:
+  To run the tests (requires root privileges):
 
 	# make test
 	
@@ -67,5 +63,8 @@ EXAMPLES
   dumper.pl  -  Dumps packet metadata and IP headers.
 
 COPYRIGHT
-  Copyright (c) 2000-2002 James Morris <jmorris@intercode.com.au>
+  Copyright (c) 2000-2015:
+  James Morris <jmorris@intercode.com.au>,
+  Matt Koscica <mattk@cpan.org>
+
   This package is released under the GPL.

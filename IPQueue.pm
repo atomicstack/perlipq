@@ -1,6 +1,3 @@
-#
-# $Id: IPQueue.pm,v 1.23 2002/01/14 09:15:49 jmorris Exp $
-#
 # Perlipq - Perl extension for iptables userspace queuing.
 # This code is GPL.
 #
@@ -21,7 +18,7 @@ use Socket 'PF_INET';
 @ISA = qw(Exporter DynaLoader);
 @EXPORT_OK = qw(IPQ_COPY_META IPQ_COPY_PACKET NF_DROP NF_ACCEPT);
 %EXPORT_TAGS = (constants => \@EXPORT_OK);
-$VERSION = '1.25';
+$VERSION = '1.26';
 
 sub AUTOLOAD
 {

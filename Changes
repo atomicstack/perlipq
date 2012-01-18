@@ -22,3 +22,5 @@ Revision history for Perl extension IPTables::IPv4::IPQueue.
   Added support for IPv6, which was implemented in libipq by
   Fernando Anton.
   
+* Wed 18 Jan 2012 Matt Koscica <mattk@cpan.org>
+  Fixed and modernised test suite.
